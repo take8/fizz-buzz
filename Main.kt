@@ -10,7 +10,7 @@
 
 fun main() {
     val start = FizzBuzzNumber(1)
-    val end = FizzBuzzNumber(100)
+    val end = FizzBuzzNumber(105)
     FizzBuzz(start, end).print()
 }
 
@@ -33,8 +33,10 @@ class FizzBuzz constructor(_start: FizzBuzzNumber, _end: FizzBuzzNumber) {
     private fun generateRuleList(): FizzBuzzRuleList {
         return FizzBuzzRuleList(
             listOf(
+                FizzBuzzRule(FizzBuzzNumber(2), "Fuga"),
                 FizzBuzzRule(FizzBuzzNumber(3), "Fizz"),
                 FizzBuzzRule(FizzBuzzNumber(5), "Buzz"),
+                FizzBuzzRule(FizzBuzzNumber(7), "Hoge"),
             )
         )
     }
