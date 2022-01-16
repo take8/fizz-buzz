@@ -64,7 +64,8 @@ class FizzBuzzNumberSequence constructor(_start: FizzBuzzNumber, _end: FizzBuzzN
 
     fun print(ruleList: FizzBuzzRuleList): Unit {
         numbers.forEach{ number ->
-            println(number.toText(ruleList))
+            // println(number.toText(ruleList))
+            println(String.format("%3s: %s", number.value, number.toText(ruleList)))
         }
     }
 }
