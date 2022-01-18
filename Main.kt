@@ -9,7 +9,7 @@
 // オレオレ方針: ルールの追加がしやすい設計を考えてみる
 
 fun main() {
-    FizzBuzz(1, 105).print()
+    FizzBuzz(1, 210).print()
 }
 
 /**
