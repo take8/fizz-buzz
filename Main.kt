@@ -9,15 +9,13 @@
 // オレオレ方針: ルールの追加がしやすい設計を考えてみる
 
 fun main() {
-    val start = FizzBuzzNumber(1)
-    val end = FizzBuzzNumber(105)
-    FizzBuzz(start, end).print()
+    FizzBuzz(1, 105).print()
 }
 
 /**
  * FizzBuzz
  */
-class FizzBuzz(val start: FizzBuzzNumber, val end: FizzBuzzNumber) {
+class FizzBuzz(val start: Int, val end: Int) {
     val numberSequence: FizzBuzzNumberSequence
     val ruleList: FizzBuzzRuleList
 
@@ -33,10 +31,10 @@ class FizzBuzz(val start: FizzBuzzNumber, val end: FizzBuzzNumber) {
     private fun generateRuleList(): FizzBuzzRuleList {
         return FizzBuzzRuleList(
             listOf(
-                FizzBuzzRule(FizzBuzzNumber(2), "Fuga"),
-                FizzBuzzRule(FizzBuzzNumber(3), "Fizz"),
-                FizzBuzzRule(FizzBuzzNumber(5), "Buzz"),
-                FizzBuzzRule(FizzBuzzNumber(7), "Hoge"),
+                FizzBuzzRule(2, "Fuga"),
+                FizzBuzzRule(3, "Fizz"),
+                FizzBuzzRule(5, "Buzz"),
+                FizzBuzzRule(7, "Hoge"),
             )
         )
     }
@@ -49,17 +47,19 @@ class FizzBuzz(val start: FizzBuzzNumber, val end: FizzBuzzNumber) {
 /**
  * FizzBuzz数列
  */
-class FizzBuzzNumberSequence(val start: FizzBuzzNumber, val end: FizzBuzzNumber) {
+class FizzBuzzNumberSequence(val start: Int, val end: Int) {
     val numbers: List<FizzBuzzNumber>
 
     init {
-        // TODO: 必要なら引数のチェック
+        if (start > end) {
+            throw IllegalArgumentException("{start} must be <= {end}...")
+        }
 
         numbers = generateSequence(start, end)
     }
 
-    private fun generateSequence(start: FizzBuzzNumber, end: FizzBuzzNumber): List<FizzBuzzNumber> {
-        return ((start.value)..(end.value)).toList().map{
+    private fun generateSequence(start: Int, end: Int): List<FizzBuzzNumber> {
+        return (start..end).toList().map{
             FizzBuzzNumber(it)
         }
     }
@@ -105,12 +105,14 @@ class FizzBuzzRuleList(val rules: List<FizzBuzzRule>) {
     init {
         // TODO: 必要なら引数のチェック
     }
+    // TODO: "ルールを追加する"を函数として表現するのもいいかも
 }
 
 /**
  * FizzBuzzの変換ルール
+ * number の倍数の場合に text に変換する
  */
-class FizzBuzzRule(val number: FizzBuzzNumber, val text: String) {
+class FizzBuzzRule(val number: Int, val text: String) {
     // TODO: 第一引数を"条件"を表現できるオブジェクトに変更すれば、より汎用的にできそう
     // TODO: textもValue Objectにすべきかも
 
@@ -119,7 +121,7 @@ class FizzBuzzRule(val number: FizzBuzzNumber, val text: String) {
     }
 
     private fun isMultiple(target: FizzBuzzNumber): Boolean {
-        return target.value % number.value === 0
+        return target.value % number === 0
     }
 
     fun toText(target: FizzBuzzNumber): String? {
